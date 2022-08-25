@@ -1,0 +1,18 @@
+{
+	"translation": {
+		"error": {
+			"position": "position {{index}}",
+			"wildType": {
+				"i": "special wildcard \"$i\" must be of type non-null object. Received {{type}} ({{typeType}})",
+				"r": "special wildcard \"$r\" must be of type string or Array. Received {{type}} ({{typeType}})",
+				"$": "special wildcard \"$$\" must be of type string. Received {{type}} ({{typeType}})"
+			},
+			"unSupportDataType": "unsupport data type. Received {{type}} ({{typeType}})"
+		},
+		"Database": "PostgreSQL",
+		"connectDatabase": "Connect Database",
+		"connectDatabaseParam": "✔ Database User {{user}} Client Encoding {{encoding}}",
+		"disconnectDatabase": "Disconnect Database",
+		"disconnectDatabaseParam": "✔ Database User {{user}}"
+	}
+}

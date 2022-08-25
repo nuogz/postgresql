@@ -1,0 +1,29 @@
+{
+	"name": "@nuogz/postgresql",
+	"version": "1.0.0",
+	"description": "postgresql library based on pg",
+	"author": "Nuogz",
+	"license": "LGPL-3.0-or-later",
+	"repository": {
+		"type": "git",
+		"url": "github:nuogz/postgresql"
+	},
+	"type": "module",
+	"typesSource": [],
+	"engines": {
+		"node": ">=14.18.1"
+	},
+	"main": "index.js",
+	"files": [
+		"index.js",
+		"lib/**"
+	],
+	"dependencies": {
+		"@nuogz/class-inject-leveled-log": "^1.0.0",
+		"@nuogz/i18n": "^1.2.1",
+		"pg": "^8.8.0"
+	},
+	"devDependencies": {
+		"eslint": "^8.22.0"
+	}
+}

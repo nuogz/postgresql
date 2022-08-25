@@ -1,0 +1,18 @@
+{
+	"translation": {
+		"error": {
+			"position": "位置 {{index,hadesValue}}",
+			"wildType": {
+				"i": "特殊通配符~[\"$i\"]必须是非null对象。收到 {{type,hadesValue}} ({{typeType,hadesTerm}})",
+				"r": "特殊通配符~[\"$r\"]必须是字符串或数组。收到 {{type,hadesValue}} ({{typeType,hadesTerm}})",
+				"$": "特殊通配符~[\"$$\"]必须是字符串。收到 {{type,hadesValue}} ({{typeType,hadesTerm}})"
+			},
+			"unSupportDataType": "不支持的数据类型。收到 {{type,hadesValue}} ({{typeType,hadesTerm}})"
+		},
+		"Database": "~[PostgreSQL]",
+		"connectDatabase": "连接 ~[数据库]",
+		"connectDatabaseParam": "✔ ~[数据库用户]{{user,hadesValue}} ~[客户端编码]{{encoding,hadesValue}}",
+		"endDatabase": "断开 ~[数据库]",
+		"endDatabaseParam": "✔ ~[数据库用户]{{user,hadesValue}}"
+	}
+}
