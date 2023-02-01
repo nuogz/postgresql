@@ -1,6 +1,6 @@
 import PostgreSQL from 'pg';
 
-import LoggerInjecter from '@nuogz/class-inject-leveled-log';
+import { injectBaseLogger } from '@nuogz/utility';
 
 import { TT } from './lib/i18n.js';
 
@@ -130,6 +130,9 @@ export const formatSQL = (sql, matches = [], locale) => {
 	return [sqlFormatted, values];
 };
 
+/**
+ * @param {PostgreSQL.QueryResult} result
+ */
 const parseResult = result => {
 	if(result.command == 'INSERT' || result.command == 'UPDATE' || result.command == 'DELETE') {
 		if(result.rows.length) {
@@ -161,20 +164,39 @@ export class PostgresClient {
 	 */
 	locale;
 
+	/**
+	 * @param {PostgreSQL.PoolClient} client
+	 * @param {Postgres} parent
+	 * @param {string} locale
+	 */
 	constructor(client, parent, locale) {
 		this.client = client;
 		this.parent = parent;
 		this.locale = locale;
 	}
 
+	/**
+	 * @param {string} sql
+	 * @param {...any} params
+	 */
 	format(sql, ...params) { return formatSQL(sql, params, this.locale); }
 
+	/**
+	 *
+	 * @param {string} sql
+	 * @param {...any} params
+	 */
 	async query(sql, ...params) {
 		const [sqlForamted, values] = formatSQL(sql, params, this.locale);
 		const result = await this.client.query(sqlForamted, values);
 
 		return parseResult(result);
 	}
+	/**
+	 *
+	 * @param {string} sql
+	 * @param {...any} params
+	 */
 	async queryOne(sql, ...params) {
 		const [sqlForamted, values] = formatSQL(sql, params, this.locale);
 		const result = await this.client.query(sqlForamted, values);
@@ -182,16 +204,20 @@ export class PostgresClient {
 		return parseResult(result)[0];
 	}
 
-	async begin() {
+
+	begin() {
 		return this.client.query('BEGIN');
 	}
-	async commit() {
+	commit() {
 		return this.client.query('COMMIT');
 	}
-	async rollback() {
+	rollback() {
 		return this.client.query('ROLLBACK');
 	}
 
+	/**
+	 * @param {boolean|Error} [error]
+	 */
 	close(error) {
 		return new Promise(resolve => {
 			this.client.once('end', () => resolve());
@@ -219,7 +245,7 @@ export default class Postgres {
 	 * @typedef {Object} DatabaseOption
 	 * @property {string} [name]
 	 * @property {string} [locale]
-	 * @property {import('@nuogz/class-inject-leveled-log').LogOption} [logger]
+	 * @property {import('@nuogz/utility').injectBaseLogger} [logger]
 	 * - `undefined` for use `console` functions
 	 * - `false` for close output
 	 * - `Function` for output non-leveled logs
@@ -238,7 +264,7 @@ export default class Postgres {
 		this.TT = TT(this.locale);
 
 
-		LoggerInjecter(this, Object.assign({ name: this.TT('Database') }, option.logger));
+		injectBaseLogger(this, Object.assign({ name: this.TT('Database') }, option.logger));
 
 
 		/**
@@ -269,17 +295,28 @@ export default class Postgres {
 		return this.logDebug(this.TT('disconnectDatabase'), this.TT('disconnectDatabaseParam', { user: this.user }));
 	}
 
-
+	/**
+	 * @param {string} sql
+	 * @param {...any} params
+	 */
 	format(sql, ...params) { return formatSQL(sql, params, this.locale); }
 
 	async pick() { return new PostgresClient(await this.pool.connect(), this, this.locale); }
 
+	/**
+	 * @param {string} sql
+	 * @param {...any} params
+	 */
 	async query(sql, ...params) {
 		const [sqlForamted, valuesBuffer] = formatSQL(sql, params, this.locale);
 		const result = await this.pool.query(sqlForamted, valuesBuffer);
 
 		return parseResult(result);
 	}
+	/**
+	 * @param {string} sql
+	 * @param {...any} params
+	 */
 	async queryOne(sql, ...params) {
 		const [sqlForamted, valuesBuffer] = formatSQL(sql, params, this.locale);
 		const result = await this.pool.query(sqlForamted, valuesBuffer);
