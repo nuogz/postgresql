@@ -1,18 +1,24 @@
 {
-	"translation": {
-		"error": {
-			"position": "位置 {{index}}",
-			"wildType": {
-				"i": "特殊通配符\"$i\"必须是非null对象。收到：{{type}} ({{typeType}})",
-				"r": "特殊通配符\"$r\"必须是字符串或数组。收到：{{type}} ({{typeType}})",
-				"$": "特殊通配符\"$$\"必须是字符串。收到：{{type}} ({{typeType}})"
-			},
-			"unSupportDataType": "不支持的数据类型。收到：{{type}} ({{typeType}})"
+	"error": {
+		"position@proto": "位置：{{index}}",
+		"position@hades": "位置{{index,value@hades}}",
+		"wildType": {
+			"i@proto": "通配符$i必须是类型非null的object，值：{{-type,valueType}}",
+			"i@hades": "通配符~[$i]必须是类型非null的~{object}，值{{-type,valueType@hades}}",
+			"r@proto": "通配符$r必须是类型string或实例Array的其中之一，值：{{-type,valueType}}",
+			"r@hades": "通配符~[$r]必须是类型~{string}或实例~{Array}的其中之一，值{{-type,valueType@hades}}",
+			"$@proto": "通配符$$必须是类型string，值：{{-type,valueType}}",
+			"$@hades": "通配符~[$$]必须是类型~{string}，值{{-type,valueType@hades}}"
 		},
-		"Database": "PostgreSQL",
-		"connectDatabase": "连接 数据库",
-		"connectDatabaseParam": "✔ 数据库用户：{{user}}，客户端编码：{{encoding}}",
-		"endDatabase": "断开 数据库",
-		"endDatabaseParam": "✔ 数据库用户：{{user}}"
-	}
+		"unknownWildType@proto": "未知通配符，值：{{-type,valueType}}",
+		"unknownWildType@hades": "未知~[通配符]，值{{-type,valueType@hades}}"
+	},
+	"connectDatabase@proto": "连接 数据库：{{name}}",
+	"connectDatabase@hades": "连接 ~[数据库]{{name,value@hades}}",
+	"connectDatabaseParam@proto": "✔ 用户：{{user}}，客户端编码：{{encoding}}",
+	"connectDatabaseParam@hades": "✔ ~[用户]{{user,value@hades}} ~[客户端编码]{{encoding,value@hades}}",
+	"disconnectDatabase@proto": "断开 数据库：{{name}}",
+	"disconnectDatabase@hades": "断开 ~[数据库]{{name,value@hades}}",
+	"disconnectDatabaseParam@proto": "✔ 用户：{{user}}",
+	"disconnectDatabaseParam@hades": "✔ ~[用户]{{user,value@hades}}"
 }

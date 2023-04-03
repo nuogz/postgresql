@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v1.1.0 - 2023.03.31 20
+* adjust the arguments of `formatSQL` to align with other functions that call it
+* bump up `@nuogz/i18n` to `v3.x` and renew related code
+* improve `d.ts`
+* bump up dependencies
+
+
 ## v1.0.2 - 2023.02.01 09
 * add declaration files
 * improve `d.ts`

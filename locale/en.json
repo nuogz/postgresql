@@ -1,18 +1,25 @@
 {
-	"translation": {
-		"error": {
-			"position": "position {{index}}",
-			"wildType": {
-				"i": "special wildcard \"$i\" must be of type non-null object. Received {{type}} ({{typeType}})",
-				"r": "special wildcard \"$r\" must be of type string or Array. Received {{type}} ({{typeType}})",
-				"$": "special wildcard \"$$\" must be of type string. Received {{type}} ({{typeType}})"
-			},
-			"unSupportDataType": "unsupport data type. Received {{type}} ({{typeType}})"
+	"Database@proto": "PostgreSQL",
+	"error": {
+		"position@proto": "position: {{index}}",
+		"position@hades": "position {{index,value@hades}}",
+		"wildType": {
+			"i@proto": "wildcard $i must be of type non-null object, value: {{-type,valueType}}",
+			"i@hades": "wildcard ~[$i] must be of type non-null object, ~[value] {{-type,valueType@hades}}",
+			"r@proto": "wildcard $r must be one of type string or an instance of Array, value: {{-type,valueType}}",
+			"r@hades": "wildcard ~[$r] must be one of type ~{string} or an instance of ~{Array}, ~[value] {{-type,valueType@hades}}",
+			"$@proto": "wildcard $$ must be of type string, value: {{-type,valueType}}",
+			"$@hades": "wildcard ~[$$] must be of type ~{string}, ~[value] {{-type,valueType@hades}}"
 		},
-		"Database": "PostgreSQL",
-		"connectDatabase": "Connect Database",
-		"connectDatabaseParam": "✔ Database User {{user}} Client Encoding {{encoding}}",
-		"disconnectDatabase": "Disconnect Database",
-		"disconnectDatabaseParam": "✔ Database User {{user}}"
-	}
+		"unknownWildType@proto": "unknown wildcard, value: {{-type,valueType}}",
+		"unknownWildType@hades": "unknown ~[wildcard], ~[value] {{-type,valueType@hades}}"
+	},
+	"connectDatabase@proto": "connect database: {{name}}",
+	"connectDatabase@hades": "connect ~[database] {{name,value@hades}}",
+	"connectDatabaseParam@proto": "✔ user: {{user}} client encoding: {{encoding}}",
+	"connectDatabaseParam@hades": "✔ ~[user] {{user,value@hades}} ~[client encoding] {{encoding,value@hades}}",
+	"disconnectDatabase@proto": "disconnect database: {{name}}",
+	"disconnectDatabase@hades": "disconnect ~[database] {{name,value@hades}}",
+	"disconnectDatabaseParam@proto": "✔ user: {{user}}",
+	"disconnectDatabaseParam@hades": "✔ ~[user] {{user,value@hades}}"
 }
