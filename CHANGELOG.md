@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.1.2 - 2023.04.07 14
+* fix locales typo
+
+
 ## v1.1.1 - 2023.04.07 11
 * improve error throws
 * improve locales
