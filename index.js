@@ -72,7 +72,7 @@ const formatCommonData = (match, values, type = typeof match, wild) => {
 	}
 
 
-	throw T('error.unknownWildType', { type }, 'PostgresSQL.formatCommonData');
+	throw Error(T('WildcardError.unknown', { type }, 'PostgresSQL.formatCommonData'));
 };
 
 const formatIdentifier = identifier => `"${identifier}"`;
@@ -103,10 +103,10 @@ export const formatSQL = (sql, ...matches) => {
 		try {
 			// check special match
 			if(wild == '$i' && type != 'object') {
-				throw T('error.wildType.i', { type: match }, 'PostgresSQL.formatSQL');
+				throw Error(T('WildcardError.i', { type: match }, 'PostgresSQL.formatSQL'));
 			}
 			if(wild == '$r' && !(match instanceof Array || type == 'string')) {
-				throw T('error.wildType.r', { type: match }, 'PostgresSQL.formatSQL');
+				throw Error(T('WildcardError.r', { type: match }, 'PostgresSQL.formatSQL'));
 			}
 
 			// match `undefined` will return original string
@@ -116,7 +116,7 @@ export const formatSQL = (sql, ...matches) => {
 			// handle identifier
 			if(wild == '$$') {
 				if(type != 'string') {
-					throw T('error.wildType.$', { type: match }, 'PostgresSQL.formatSQL');
+					throw Error(T('WildcardError.$', { type: match }, 'PostgresSQL.formatSQL'));
 				}
 
 				return formatIdentifier(match);
@@ -151,10 +151,10 @@ export const formatSQL = (sql, ...matches) => {
 		}
 		catch(error) {
 			if(typeof error == 'string') {
-				throw `${error}, ${T('error.position', { index: indexMatch })}`;
+				throw Error(`${error}, ${T('position', { index: indexMatch })}`);
 			}
 			else {
-				throw error;
+				throw Error(`${error.message}, ${T('position', { index: indexMatch })}`, { cause: error });
 			}
 		}
 	});
@@ -290,7 +290,7 @@ export default class Postgres {
 
 		return this.pool.query('SHOW CLIENT_ENCODING')
 			.then(result => {
-				this.logDebug(T('connectDatabase', { name: this.name }), T('connectDatabaseParam', { user: this.user, encoding: result.rows?.[0]?.client_encoding }));
+				this.logDebug(T('connectDatabase', { name: this.name }), T('connectDatabaseInfo', { user: this.user, encoding: result.rows?.[0]?.client_encoding }));
 
 				return this;
 			});
@@ -299,7 +299,7 @@ export default class Postgres {
 	async disconnect() {
 		await this.pool.end();
 
-		return this.logDebug(T('disconnectDatabase', { name: this.name }), T('disconnectDatabaseParam', { user: this.user }));
+		return this.logDebug(T('disconnectDatabase', { name: this.name }), T('disconnectDatabaseInfo', { user: this.user }));
 	}
 
 	/**

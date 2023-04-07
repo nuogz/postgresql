@@ -25,7 +25,7 @@
 	},
 	"dependencies": {
 		"@nuogz/i18n": "^3.1.0",
-		"@nuogz/utility": "^1.6.4",
+		"@nuogz/utility": "^1.6.5",
 		"pg": "^8.10.0"
 	},
 	"devDependencies": {

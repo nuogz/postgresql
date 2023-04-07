@@ -5,8 +5,8 @@ dependencies:
     specifier: ^3.1.0
     version: 3.1.0
   '@nuogz/utility':
-    specifier: ^1.6.4
-    version: 1.6.4
+    specifier: ^1.6.5
+    version: 1.6.5
   pg:
     specifier: ^8.10.0
     version: 8.10.0
@@ -113,18 +113,18 @@ packages:
       i18next: 22.4.14
     dev: false
 
-  /@nuogz/json-bigint@1.2.1:
-    resolution: {integrity: sha512-OzOHgyabq+xQFodoz4N/zO5SbvE+4xxISwLBHCBqGSgfkD7nEQjDMqfd+k8LJxkVFoL18q4yzhD7URMVNrH4dg==}
+  /@nuogz/json-bigint@1.2.2:
+    resolution: {integrity: sha512-vmDtU9btztNv33Jfw78lrgahlw/RQ4b8VmncxwDuXoob5gdts2hyOM1DwMVlG71Zx1Tj5ij2k2vflBFFvPfSlw==}
     engines: {node: '>=14.18.1'}
     dependencies:
       '@nuogz/i18n': 3.1.0
     dev: false
 
-  /@nuogz/utility@1.6.4:
-    resolution: {integrity: sha512-XxBOqEnPrs5WCV66kgDToIzyI2VXUcLxzu9GJuwf029BjfS7Hb2xOo4XmRh+DDJZY2LtHS/jimBZwrLCfUi6Nw==}
+  /@nuogz/utility@1.6.5:
+    resolution: {integrity: sha512-4sUwxefeJvGzaFQK/mZQAcW7doXz/z2je7kYS9a6+YSlnTeEniTMQkEIIoww+FVKkbeiwjSWFeF4y8R2mHWozQ==}
     engines: {node: '>=14.18.1'}
     dependencies:
-      '@nuogz/json-bigint': 1.2.1
+      '@nuogz/json-bigint': 1.2.2
     dev: false
 
   /acorn-jsx@5.3.2(acorn@8.8.2):
