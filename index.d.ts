@@ -19,20 +19,20 @@ export class PostgresClient {
      * @param {string} sql
      * @param {...any} params
      */
-    query(sql: string, ...params: any[]): Promise<any>;
+    query(sql: string, ...params: any[]): Promise<number | any[] | PostgreSQL.QueryResult<any>>;
     /**
      *
      * @param {string} sql
      * @param {...any} params
      */
     queryOne(sql: string, ...params: any[]): Promise<any>;
-    begin(): any;
-    commit(): any;
-    rollback(): any;
+    begin(): Promise<PostgreSQL.QueryResult<any>>;
+    commit(): Promise<PostgreSQL.QueryResult<any>>;
+    rollback(): Promise<PostgreSQL.QueryResult<any>>;
     /**
      * @param {boolean|Error} [error]
      */
-    close(error?: boolean | Error): any;
+    close(error?: boolean | Error): Promise<any>;
 }
 export default class Postgres {
     /**
@@ -57,7 +57,7 @@ export default class Postgres {
      * @param {string} sql
      * @param {...any} params
      */
-    query(sql: string, ...params: any[]): Promise<any>;
+    query(sql: string, ...params: any[]): Promise<number | any[] | PostgreSQL.QueryResult<any>>;
     /**
      * @param {string} sql
      * @param {...any} params
@@ -88,4 +88,5 @@ export type DatabaseOption = {
      */
     logger?: typeof injectBaseLogger;
 };
+import PostgreSQL from "pg";
 import { injectBaseLogger } from "@nuogz/utility";

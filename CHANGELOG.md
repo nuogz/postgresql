@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v1.1.3 - 2023.05.09 17
+* fix `d.ts`
+* fix locales typo
+* bump up dependencies
+
+
 ## v1.1.2 - 2023.04.07 14
 * fix locales typo
 

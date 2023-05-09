@@ -1,10 +1,10 @@
 {
 	"WildcardError": {
-		"i@proto": "通配符$i必须是类型非null的object，值：{{-type,valueType}}",
+		"i@proto": "通配符'$i'必须是类型非null的object，值：{{-type,valueType}}",
 		"i@hades": "通配符~[$i]必须是类型非null的~{object}，值{{-type,valueType@hades}}",
-		"r@proto": "通配符$r必须是类型string或实例Array的其中之一，值：{{-type,valueType}}",
+		"r@proto": "通配符'$r'必须是类型string或实例Array的其中之一，值：{{-type,valueType}}",
 		"r@hades": "通配符~[$r]必须是类型~{string}或实例~{Array}的其中之一，值{{-type,valueType@hades}}",
-		"$@proto": "通配符$$必须是类型string，值：{{-type,valueType}}",
+		"$@proto": "通配符'$$'必须是类型string，值：{{-type,valueType}}",
 		"$@hades": "通配符~[$$]必须是类型~{string}，值{{-type,valueType@hades}}",
 		"unknown@proto": "未知通配符，值：{{-type,valueType}}",
 		"unknown@hades": "未知~[通配符]，值{{-type,valueType@hades}}"
