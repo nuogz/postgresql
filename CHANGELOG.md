@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.1.4 - 2023.05.09 19
+* fix `package.json`
+
+
 ## v1.1.3 - 2023.05.09 17
 * fix `d.ts`
 * fix locales typo
