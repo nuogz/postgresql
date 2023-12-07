@@ -19,7 +19,7 @@ export class PostgresClient {
      * @param {string} sql
      * @param {...any} params
      */
-    query(sql: string, ...params: any[]): Promise<number | any[] | PostgreSQL.QueryResult<any>>;
+    query(sql: string, ...params: any[]): Promise<number | any[] | PostgreSQL.QueryResult<any> | null>;
     /**
      *
      * @param {string} sql
@@ -32,14 +32,14 @@ export class PostgresClient {
     /**
      * @param {boolean|Error} [error]
      */
-    close(error?: boolean | Error): Promise<any>;
+    close(error?: boolean | Error | undefined): Promise<any>;
 }
 export default class Postgres {
     /**
      * @param {AuthInfo} auth
      * @param {DatabaseOption} [option={}]
      */
-    constructor(auth: AuthInfo, option?: DatabaseOption);
+    constructor(auth: AuthInfo, option?: DatabaseOption | undefined);
     /** @type {string} */
     name: string;
     /** @type {PostgreSQL.Pool} */
@@ -57,7 +57,7 @@ export default class Postgres {
      * @param {string} sql
      * @param {...any} params
      */
-    query(sql: string, ...params: any[]): Promise<number | any[] | PostgreSQL.QueryResult<any>>;
+    query(sql: string, ...params: any[]): Promise<number | any[] | PostgreSQL.QueryResult<any> | null>;
     /**
      * @param {string} sql
      * @param {...any} params
@@ -79,14 +79,14 @@ export type AuthInfo = {
  * Database Option
  */
 export type DatabaseOption = {
-    name?: string;
+    name?: string | undefined;
     /**
      * - `undefined` for use `console` functions
      * - `false` for close output
      * - `Function` for output non-leveled logs
      * - `{LogFunctions}` for leveled logs. The function will be called in the format of where, what and result. **ATTENTION** The Error instance will be passed in as one of the result arguments, not stringified error text.
      */
-    logger?: typeof injectBaseLogger;
+    logger?: typeof injectBaseLogger | undefined;
 };
-import PostgreSQL from "pg";
-import { injectBaseLogger } from "@nuogz/utility";
+import PostgreSQL from 'pg';
+import { injectBaseLogger } from '@nuogz/utility';

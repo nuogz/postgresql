@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v1.2.0 - 2023.12.07 09
+* tweak enviroment
+* bump up dependencies
+
+
 ## v1.1.4 - 2023.05.09 19
 * fix `package.json`
 
