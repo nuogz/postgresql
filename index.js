@@ -36,7 +36,7 @@ import { injectBaseLogger } from '@nuogz/utility';
 loadI18NResource('@nuogz/postgresql', resolve(dirname(fileURLToPath(import.meta.url)), 'locale'));
 
 
-const T = TT('@nuogz/postgresql');
+const { T } = TT('@nuogz/postgresql');
 
 
 

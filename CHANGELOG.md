@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.2.1 - 2024.08.22 23
+* bump up dependencies and renew codes
+
+
 ## v1.2.0 - 2023.12.07 09
 * tweak enviroment
 * bump up dependencies
