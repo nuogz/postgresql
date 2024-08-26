@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v1.3.0 - 2024.08.26 15
+* feat: new function `Postgres().pickTransaction`
+* refactor: renew codes to adapt to latest `@nuogz/i18n`
+* docs: renew locale with latest `@nuogz/i18n`
+* deps: bump up dependencies
+
+
 ## v1.2.1 - 2024.08.22 23
 * bump up dependencies and renew codes
 

@@ -1,4 +1,4 @@
-import { dirname, resolve } from 'path';
+import { dirname, resolve as resolvePath } from 'path';
 import { fileURLToPath } from 'url';
 
 import PostgreSQL from 'pg';
@@ -8,32 +8,13 @@ import { injectBaseLogger } from '@nuogz/utility';
 
 
 
-/**
- * Database connection auth info
- * @typedef {Object} AuthInfo
- * @property {string} host
- * @property {number} port
- * @property {string} database
- * @property {string} user
- * @property {string} password
- * @property {number} max
- */
-
-
-/**
- * Database Option
- * @typedef {Object} DatabaseOption
- * @property {string} [name]
- * @property {import('@nuogz/utility').injectBaseLogger} [logger]
- * - `undefined` for use `console` functions
- * - `false` for close output
- * - `Function` for output non-leveled logs
- * - `{LogFunctions}` for leveled logs. The function will be called in the format of where, what and result. **ATTENTION** The Error instance will be passed in as one of the result arguments, not stringified error text.
- */
+/** @typedef {import('./bases.d.ts').AuthInfo} AuthInfo */
+/** @typedef {import('./bases.d.ts').DatabaseOption} DatabaseOption */
+/** @typedef {import('./bases.d.ts').TransactionHandle} TransactionHandle */
 
 
 
-loadI18NResource('@nuogz/postgresql', resolve(dirname(fileURLToPath(import.meta.url)), 'locale'));
+loadI18NResource('@nuogz/postgresql', resolvePath(dirname(fileURLToPath(import.meta.url)), 'locale'));
 
 
 const { T } = TT('@nuogz/postgresql');
@@ -72,7 +53,7 @@ const formatCommonData = (match, values, type = typeof match, wild) => {
 	}
 
 
-	throw Error(T('WildcardError.unknown', { type }, 'PostgresSQL.formatCommonData'));
+	throw Error(T('wildcard-error.unknown', { type }, 'PostgresSQL.formatCommonData'));
 };
 
 const formatIdentifier = identifier => `"${identifier}"`;
@@ -103,10 +84,10 @@ export const formatSQL = (sql, ...matches) => {
 		try {
 			// check special match
 			if(wild == '$i' && type != 'object') {
-				throw Error(T('WildcardError.i', { type: match }, 'PostgresSQL.formatSQL'));
+				throw Error(T('wildcard-error.i', { type: match }, 'PostgresSQL.formatSQL'));
 			}
 			if(wild == '$r' && !(match instanceof Array || type == 'string')) {
-				throw Error(T('WildcardError.r', { type: match }, 'PostgresSQL.formatSQL'));
+				throw Error(T('wildcard-error.r', { type: match }, 'PostgresSQL.formatSQL'));
 			}
 
 			// match `undefined` will return original string
@@ -116,7 +97,7 @@ export const formatSQL = (sql, ...matches) => {
 			// handle identifier
 			if(wild == '$$') {
 				if(type != 'string') {
-					throw Error(T('WildcardError.$', { type: match }, 'PostgresSQL.formatSQL'));
+					throw Error(T('wildcard-error.$', { type: match }, 'PostgresSQL.formatSQL'));
 				}
 
 				return formatIdentifier(match);
@@ -256,7 +237,7 @@ export class PostgresClient {
 
 export default class Postgres {
 	/** @type {string} */
-	name = T('Database');
+	name = T('database');
 
 
 	/** @type {PostgreSQL.Pool} */
@@ -290,7 +271,7 @@ export default class Postgres {
 
 		return this.pool.query('SHOW CLIENT_ENCODING')
 			.then(result => {
-				this.logDebug(T('connectDatabase', { name: this.name }), T('connectDatabaseInfo', { user: this.user, encoding: result.rows?.[0]?.client_encoding }));
+				this.logDebug(T('connect-database', { name: this.name }), T('connect-database-info', { user: this.user, encoding: result.rows?.[0]?.client_encoding }));
 
 				return this;
 			});
@@ -299,7 +280,7 @@ export default class Postgres {
 	async disconnect() {
 		await this.pool.end();
 
-		return this.logDebug(T('disconnectDatabase', { name: this.name }), T('disconnectDatabaseInfo', { user: this.user }));
+		return this.logDebug(T('disconnect-database', { name: this.name }), T('disconnect-database-info', { user: this.user }));
 	}
 
 	/**
@@ -308,7 +289,53 @@ export default class Postgres {
 	 */
 	format(sql, ...params) { return formatSQL(sql, ...params); }
 
+
 	async pick() { return new PostgresClient(await this.pool.connect(), this); }
+
+
+	/**
+	 * @param {Error|any} error
+	 * @param {PostgresClient} connection
+	 * @returns {Promise<any>}
+	 */
+	async handleErrorTransaction(error, connection) {
+		try {
+			await connection.rollback();
+		}
+		catch(errorRollback) {
+			throw Error(T('rollback-error', { errorRollback, error }));
+		}
+	}
+	/**
+	 * @param {TransactionHandle} handle
+	 * @param {string} [usage]
+	 * @returns {Promise<any>}
+	 */
+	async pickTransaction(handle, usage, handleError = this.handleErrorTransaction) {
+		let connection;
+		try {
+			connection = await this.pick(usage);
+
+
+			await connection.transaction();
+
+
+			const result = await handle(connection);
+
+
+			await connection.commit();
+
+
+			return result;
+		}
+		catch(error) {
+			return handleError(error, connection);
+		}
+		finally {
+			connection.close();
+		}
+	}
+
 
 	/**
 	 * @param {string} sql

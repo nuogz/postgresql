@@ -1,23 +1,15 @@
 {
-	"Database@proto": "PostgreSQL",
-	"WildcardError": {
-		"i@proto": "wildcard '$i' must be of type non-null object, value: {{-type,valueType}}",
-		"i@hades": "wildcard ~[$i] must be of type non-null ~{object}, ~[value] {{-type,valueType@hades}}",
-		"r@proto": "wildcard '$r' must be one of type string or an instance of Array, value: {{-type,valueType}}",
-		"r@hades": "wildcard ~[$r] must be one of type ~{string} or an instance of ~{Array}, ~[value] {{-type,valueType@hades}}",
-		"$@proto": "wildcard '$$' must be of type string, value: {{-type,valueType}}",
-		"$@hades": "wildcard ~[$$] must be of type ~{string}, ~[value] {{-type,valueType@hades}}",
-		"unknown@proto": "unknown wildcard, value: {{-type,valueType}}",
-		"unknown@hades": "unknown ~[wildcard], ~[value] {{-type,valueType@hades}}"
+	"database": "PostgreSQL",
+	"wildcard-error": {
+		"i": "wildcard ~[$i] must be of type non-null ~{object}, ~[value] {{-type,valueType}}",
+		"r": "wildcard ~[$r] must be one of type ~{string} or an instance of ~{Array}, ~[value] {{-type,valueType}}",
+		"$": "wildcard ~[$$] must be of type ~{string}, ~[value] {{-type,valueType}}",
+		"unknown": "unknown ~[wildcard], ~[value] {{-type,valueType}}"
 	},
-	"position@proto": "position: {{index}}",
-	"position@hades": "position {{index,value@hades}}",
-	"connectDatabase@proto": "connect database: {{name}}",
-	"connectDatabase@hades": "connect ~[database] {{name,value@hades}}",
-	"connectDatabaseInfo@proto": "✔ user: {{user}} client encoding: {{encoding}}",
-	"connectDatabaseInfo@hades": "✔ ~[user] {{user,value@hades}} ~[client encoding] {{encoding,value@hades}}",
-	"disconnectDatabase@proto": "disconnect database: {{name}}",
-	"disconnectDatabase@hades": "disconnect ~[database] {{name,value@hades}}",
-	"disconnectDatabaseInfo@proto": "✔ user: {{user}}",
-	"disconnectDatabaseInfo@hades": "✔ ~[user] {{user,value@hades}}"
+	"position": "position {{index,value}}",
+	"connect-database": "connect ~[database] {{name,value}}",
+	"connect-database-info": "✔ ~[user] {{user,value}} ~[client encoding] {{encoding,value}}",
+	"disconnect-database": "disconnect ~[database] {{name,value}}",
+	"disconnect-database-info": "✔ ~[user] {{user,value}}",
+	"rollback-error": "rollback failed. ~[rollback error]{{errorRollback,value}}. ~[rollback reason]{{error,value}}"
 }

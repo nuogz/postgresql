@@ -39,7 +39,7 @@ export default class Postgres {
      * @param {AuthInfo} auth
      * @param {DatabaseOption} [option={}]
      */
-    constructor(auth: AuthInfo, option?: DatabaseOption | undefined);
+    constructor(auth: AuthInfo, option?: import("./bases.d.ts").DatabaseOption | undefined);
     /** @type {string} */
     name: string;
     /** @type {PostgreSQL.Pool} */
@@ -54,6 +54,18 @@ export default class Postgres {
     format(sql: string, ...params: any[]): [string, Buffer[]];
     pick(): Promise<PostgresClient>;
     /**
+     * @param {Error|any} error
+     * @param {PostgresClient} connection
+     * @returns {Promise<any>}
+     */
+    handleErrorTransaction(error: Error | any, connection: PostgresClient): Promise<any>;
+    /**
+     * @param {TransactionHandle} handle
+     * @param {string} [usage]
+     * @returns {Promise<any>}
+     */
+    pickTransaction(handle: TransactionHandle, usage?: string | undefined, handleError?: (error: Error | any, connection: PostgresClient) => Promise<any>): Promise<any>;
+    /**
      * @param {string} sql
      * @param {...any} params
      */
@@ -64,29 +76,7 @@ export default class Postgres {
      */
     queryOne(sql: string, ...params: any[]): Promise<any>;
 }
-/**
- * Database connection auth info
- */
-export type AuthInfo = {
-    host: string;
-    port: number;
-    database: string;
-    user: string;
-    password: string;
-    max: number;
-};
-/**
- * Database Option
- */
-export type DatabaseOption = {
-    name?: string | undefined;
-    /**
-     * - `undefined` for use `console` functions
-     * - `false` for close output
-     * - `Function` for output non-leveled logs
-     * - `{LogFunctions}` for leveled logs. The function will be called in the format of where, what and result. **ATTENTION** The Error instance will be passed in as one of the result arguments, not stringified error text.
-     */
-    logger?: typeof injectBaseLogger | undefined;
-};
+export type AuthInfo = import("./bases.d.ts").AuthInfo;
+export type DatabaseOption = import("./bases.d.ts").DatabaseOption;
+export type TransactionHandle = import("./bases.d.ts").TransactionHandle;
 import PostgreSQL from 'pg';
-import { injectBaseLogger } from '@nuogz/utility';
